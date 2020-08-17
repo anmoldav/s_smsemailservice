@@ -41,10 +41,12 @@ public class EmailUtility {
 		   msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mailRequest.getTo()));
 		   msg.setSubject(mailRequest.getSubject());
 		   msg.setContent(mailRequest.getBody(), "text/html");
+		  
 		   msg.setSentDate(new Date());
 
 		   MimeBodyPart messageBodyPart = new MimeBodyPart();
 		   messageBodyPart.setContent(mailRequest.getBody(), "text/html");
+		   
 
 		   Multipart multipart = new MimeMultipart();
 		   multipart.addBodyPart(messageBodyPart);

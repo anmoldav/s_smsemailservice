@@ -1,10 +1,11 @@
 package com.anmol.smsemailservice.reqresp;
 
 public class MailRequest {
-
+    
 	private String from;
 	private String to;
 	private String subject;
+	//@NotEmpty(message="Body cannot be empty")
 	private String body;
 
 	public String getFrom() {
