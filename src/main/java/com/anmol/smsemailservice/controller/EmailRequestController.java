@@ -1,5 +1,8 @@
 package com.anmol.smsemailservice.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +32,13 @@ public class EmailRequestController {
 
 		String from = mailRequest.getFrom();
 		System.out.println("" + from);
-		String to = mailRequest.getTo();
+
+		List<String> to = mailRequest.getTo();
 		System.out.println("" + to);
+		List<String> cc = mailRequest.getCc();
+        System.out.println("" + cc);
+        List<String> bcc=mailRequest.getBcc();
+        System.out.println(""+bcc);
 		String subject = mailRequest.getSubject();
 		System.out.println("" + subject);
 		String body = mailRequest.getBody();
@@ -38,7 +46,7 @@ public class EmailRequestController {
 
 		try {
 			emailUtility.sendmail(mailRequest);
-            MailResponse response = new MailResponse();
+			MailResponse response = new MailResponse();
 			response.setMessage("Email sent");
 			return new ResponseEntity<Object>(response, HttpStatus.OK);
 		} catch (Exception e) {
