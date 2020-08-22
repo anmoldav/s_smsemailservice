@@ -1,6 +1,7 @@
 package com.anmol.smsemailservice.utils;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -17,12 +18,17 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.anmol.smsemailservice.entites.EmailDelivary;
+import com.anmol.smsemailservice.repo.EmailDelivaryRepository;
 import com.anmol.smsemailservice.reqresp.MailRequest;
 
 @Component
 public class EmailUtility {
+	@Autowired
+	private EmailDelivaryRepository emailDelivaryRepository;
 
 	public void sendmail(MailRequest mailRequest) throws AddressException, MessagingException, IOException {
 		Properties props = new Properties();
@@ -39,6 +45,7 @@ public class EmailUtility {
 		Message msg = new MimeMessage(session);
 
 		List<String> recipientList = mailRequest.getTo();
+
 //      InternetAddress[] addresses = new InternetAddress[mailRequest.getTo().size()];
 		InternetAddress[] recipientAddress = new InternetAddress[recipientList.size()];
 		int counter = 0;
@@ -81,7 +88,33 @@ public class EmailUtility {
 		// attachPart.attachFile("/var/tmp/image19.png");
 		// multipart.addBodyPart(attachPart);
 		msg.setContent(multipart);
-		Transport.send(msg);
+		
+		EmailDelivary delivary = new EmailDelivary();
+		try {
+
+			delivary.setTo(mailRequest.getTo().toString());
+			if(mailRequest.getCc()!= null && !mailRequest.getCc().isEmpty())
+				delivary.setCc(mailRequest.getCc().toString());
+			
+			if(mailRequest.getBcc()!= null && !mailRequest.getBcc().isEmpty())
+				delivary.setBcc(mailRequest.getBcc().toString());
+				
+			delivary.setSubject(mailRequest.getSubject());
+			delivary.setBody(mailRequest.getBody());
+
+			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+			delivary.setCreatedTimeStamp(timestamp);
+
+			Transport.send(msg);
+			delivary.setStatus("SENT");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			delivary.setStatus(e.getMessage());
+		} finally {
+			EmailDelivary save = emailDelivaryRepository.save(delivary);
+			System.out.println("save-->"+save.getId());
+		}
 	}
 
 }

@@ -17,14 +17,14 @@ public class RequestValidation {
 
 		if (Strings.isNullOrEmpty(mailRequest.getFrom()))
 			throw new IllegalArgumentException("From Can naot be Null or Empty");
-		
+
 		List<String> to = mailRequest.getTo();
 
-		if (to == null) 
-			  throw new IllegalArgumentException("To can not be Null");
-		if(to.isEmpty())
+		if (to == null)
+			throw new IllegalArgumentException("To can not be Null");
+		if (to.isEmpty())
 			throw new IllegalArgumentException("TO can not be empty");
-		 
+
 		if (Strings.isNullOrEmpty(mailRequest.getSubject()))
 			throw new IllegalArgumentException("Subject can not be Null or Empty");
 		if (Strings.isNullOrEmpty(mailRequest.getBody()))
