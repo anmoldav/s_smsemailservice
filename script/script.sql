@@ -17,5 +17,9 @@ create schema email_schema;
  									"Regarding",
  									"Please check the attachment",
  							        "email sent",
- 							        current_timestamp());								
+ 							        current_timestamp());	
+ 							        
+ create table t_template(template_no int primary key,
+ 						subject varchar(50),
+ 						body nvarchar(500));					        							
 								

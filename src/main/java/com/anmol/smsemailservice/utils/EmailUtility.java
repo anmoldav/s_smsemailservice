@@ -3,6 +3,7 @@ package com.anmol.smsemailservice.utils;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -30,7 +31,8 @@ public class EmailUtility {
 	@Autowired
 	private EmailDelivaryRepository emailDelivaryRepository;
 
-	public void sendmail(MailRequest mailRequest) throws AddressException, MessagingException, IOException {
+	public void sendmail(MailRequest mailRequest, String tempBody, String tempsubject)
+			throws AddressException, MessagingException, IOException {
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
@@ -73,13 +75,15 @@ public class EmailUtility {
 			count1++;
 		}
 		msg.setRecipients(Message.RecipientType.BCC, bccRecipientAddress);
-		msg.setSubject(mailRequest.getSubject());
-		msg.setContent(mailRequest.getBody(), "text/html");
+
+		msg.setSubject(tempsubject);
+
+		msg.setContent(tempBody, "text/html");
 
 		msg.setSentDate(new Date());
 
 		MimeBodyPart messageBodyPart = new MimeBodyPart();
-		messageBodyPart.setContent(mailRequest.getBody(), "text/html");
+		messageBodyPart.setContent(tempBody, "text/html");
 
 		Multipart multipart = new MimeMultipart();
 		multipart.addBodyPart(messageBodyPart);
@@ -88,19 +92,19 @@ public class EmailUtility {
 		// attachPart.attachFile("/var/tmp/image19.png");
 		// multipart.addBodyPart(attachPart);
 		msg.setContent(multipart);
-		
+
 		EmailDelivary delivary = new EmailDelivary();
 		try {
 
 			delivary.setTo(mailRequest.getTo().toString());
-			if(mailRequest.getCc()!= null && !mailRequest.getCc().isEmpty())
+			if (mailRequest.getCc() != null && !mailRequest.getCc().isEmpty())
 				delivary.setCc(mailRequest.getCc().toString());
-			
-			if(mailRequest.getBcc()!= null && !mailRequest.getBcc().isEmpty())
+
+			if (mailRequest.getBcc() != null && !mailRequest.getBcc().isEmpty())
 				delivary.setBcc(mailRequest.getBcc().toString());
-				
-			delivary.setSubject(mailRequest.getSubject());
-			delivary.setBody(mailRequest.getBody());
+
+			delivary.setSubject(tempsubject);
+			delivary.setBody(tempBody);
 
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
@@ -113,7 +117,7 @@ public class EmailUtility {
 			delivary.setStatus(e.getMessage());
 		} finally {
 			EmailDelivary save = emailDelivaryRepository.save(delivary);
-			System.out.println("save-->"+save.getId());
+			System.out.println("save-->" + save.getId());
 		}
 	}
 

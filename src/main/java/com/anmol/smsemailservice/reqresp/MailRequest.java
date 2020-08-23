@@ -1,6 +1,7 @@
 package com.anmol.smsemailservice.reqresp;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MailRequest {
@@ -8,11 +9,14 @@ public class MailRequest {
 	private String from;
 	//private String to;
 
-	private String subject;
-	private String body;
 	private List<String>  to= new ArrayList<String>();
      private List<String> cc= new ArrayList<String>();
      private List<String> bcc=new ArrayList<String>();
+     private int templateNo;
+     private HashMap<String ,String> parameters=new HashMap<String, String>();
+     private HashMap<String, String> subjectParameters= new HashMap<String, String>();
+     
+     
 
 	public List<String> getBcc() {
 		return bcc;
@@ -45,21 +49,36 @@ public class MailRequest {
 	/*
 	 * public void setTo(String to) { this.to = to; }
 	 */
-	public String getSubject() {
-		return subject;
+
+
+	public int getTemplateNo() {
+		return templateNo;
 	}
 
-	public void setSubject(String subject) {
-		this.subject = subject;
+	public void setTemplateNo(int templateNo) {
+		this.templateNo = templateNo;
 	}
 
-	public String getBody() {
-		return body;
+	public HashMap<String, String> getParameters() {
+		return parameters;
 	}
 
-	public void setBody(String body) {
-		this.body = body;
+	public void setParameters(HashMap<String, String> parameters) {
+		this.parameters = parameters;
 	}
+
+	public HashMap<String, String> getSubjectParameters() {
+		return subjectParameters;
+	}
+
+	public void setSubjectParameters(HashMap<String, String> subjectParameters) {
+		this.subjectParameters = subjectParameters;
+	}
+	
+	
+	
+	
+	
 
 	
 }

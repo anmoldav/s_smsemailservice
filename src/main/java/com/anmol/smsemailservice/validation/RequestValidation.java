@@ -25,10 +25,12 @@ public class RequestValidation {
 		if (to.isEmpty())
 			throw new IllegalArgumentException("TO can not be empty");
 
-		if (Strings.isNullOrEmpty(mailRequest.getSubject()))
-			throw new IllegalArgumentException("Subject can not be Null or Empty");
-		if (Strings.isNullOrEmpty(mailRequest.getBody()))
-			throw new IllegalArgumentException("Body Can not be Null or Empty");
+		/*
+		 * if (Strings.isNullOrEmpty(mailRequest)) throw new
+		 * IllegalArgumentException("Subject can not be Null or Empty"); if
+		 * (Strings.isNullOrEmpty(mailRequest.getBody())) throw new
+		 * IllegalArgumentException("Body Can not be Null or Empty");
+		 */
 
 	}
 
