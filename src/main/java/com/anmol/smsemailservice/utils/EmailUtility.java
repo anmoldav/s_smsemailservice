@@ -3,7 +3,6 @@ package com.anmol.smsemailservice.utils;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -19,6 +18,8 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +29,8 @@ import com.anmol.smsemailservice.reqresp.MailRequest;
 
 @Component
 public class EmailUtility {
+	Logger logger= LoggerFactory.getLogger(EmailUtility.class);
+
 	@Autowired
 	private EmailDelivaryRepository emailDelivaryRepository;
 
@@ -113,7 +116,8 @@ public class EmailUtility {
 			Transport.send(msg);
 			delivary.setStatus("SENT");
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
+			//System.out.println(e.getMessage());
 			delivary.setStatus(e.getMessage());
 		} finally {
 			EmailDelivary save = emailDelivaryRepository.save(delivary);

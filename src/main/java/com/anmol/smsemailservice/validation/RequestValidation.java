@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.anmol.smsemailservice.entites.EmailDelivary;
 import com.anmol.smsemailservice.reqresp.MailRequest;
 import com.google.common.base.Strings;
 
@@ -18,7 +19,7 @@ public class RequestValidation {
 		if (Strings.isNullOrEmpty(mailRequest.getFrom()))
 			throw new IllegalArgumentException("From Can naot be Null or Empty");
 
-		List<String> to = mailRequest.getTo();
+		List<String> to = (mailRequest.getTo());
 
 		if (to == null)
 			throw new IllegalArgumentException("To can not be Null");

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,7 @@ import com.anmol.smsemailservice.validation.RequestValidation;
 @RequestMapping("/mail")
 public class EmailRequestController {
 
+	private static final Logger logger = LoggerFactory.getLogger(EmailRequestController.class);
 	@Autowired
 	private EmailUtility emailUtility;
 	@Autowired
@@ -42,16 +45,19 @@ public class EmailRequestController {
 		HashMap<String, String> subjectpara = mailRequest.getSubjectParameters();
 
 		String from = mailRequest.getFrom();
-		System.out.println("" + from);
+		logger.info("Frorm:" + from);
 
 		List<String> to = mailRequest.getTo();
-		System.out.println("" + to);
+		logger.info("to:" + to);
 		List<String> cc = mailRequest.getCc();
-		System.out.println("" + cc);
+		logger.info("cc:" + cc);
+
 		List<String> bcc = mailRequest.getBcc();
+		logger.info("bcc:" + bcc);
+
 		System.out.println("" + bcc);
-		System.out.println("parameters: " + paramaters.toString());
-		System.out.println("subjpara:"+subjectpara.toString());
+		logger.info("parameters:" + paramaters.toString());
+		logger.info("subjectParameter:" + subjectpara.toString());
 
 		Optional<Template> optional = templateRepository.findById(mailRequest.getTemplateNo());
 		String tempBody = "";
@@ -63,15 +69,14 @@ public class EmailRequestController {
 			tempBody = template.getTempBody();
 			for (Map.Entry<String, String> entry : paramaters.entrySet()) {
 				String key = "$" + entry.getKey() + "$";
-				System.out.println("key:" + key);
+				logger.info("Body key:" + key);
 				tempBody = tempBody.replace(key, entry.getValue());
 			}
-			System.out.println(" Template body----" + tempBody);
-
+			logger.debug("Template Body:" + tempBody);
 			tempSubject = template.getTempSubject();
 			for (Map.Entry<String, String> subentry : subjectpara.entrySet()) {
 				String key = "$" + subentry.getKey() + "$";
-				System.out.println("kay:" + key);
+				logger.info("Subject key:"+key);
 				tempSubject = tempSubject.replace(key, subentry.getValue());
 			}
 			System.out.println("Template subject:" + tempSubject);
@@ -79,16 +84,16 @@ public class EmailRequestController {
 		} else {
 			throw new IllegalArgumentException("Templat not found");
 		}
-		
-		
 
 		try {
-			emailUtility.sendmail(mailRequest, tempBody,tempSubject);
+			emailUtility.sendmail(mailRequest, tempBody, tempSubject);
 			MailResponse response = new MailResponse();
 			response.setMessage("Email sent");
+			
 			return new ResponseEntity<Object>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 
 			ErrorResponse errorResponse = new ErrorResponse(206, e.getMessage());

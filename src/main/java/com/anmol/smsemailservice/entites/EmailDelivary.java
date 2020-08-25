@@ -43,8 +43,8 @@ public class EmailDelivary {
 		return to;
 	}
 
-	public void setTo(String to) {
-		this.to = to;
+	public void setTo(String string) {
+		this.to = string;
 	}
 
 	public String getCc() {

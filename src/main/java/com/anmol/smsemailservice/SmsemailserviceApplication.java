@@ -8,6 +8,8 @@ public class SmsemailserviceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SmsemailserviceApplication.class, args);
+
+		
 	}
 
 }
