@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "t_template", schema = "email_schema")
+@Table(name = "t_template")
 public class Template {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
