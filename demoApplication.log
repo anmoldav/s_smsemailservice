@@ -1,8 +1,3 @@
-[http-nio-8081-exec-1] INFO  com.anmol.smsemailservice.controller.EmailRequestController  - to:[anmol.dawne@gmail.com]
-[http-nio-8081-exec-1] INFO  com.anmol.smsemailservice.controller.EmailRequestController  - cc:[]
-[http-nio-8081-exec-1] INFO  com.anmol.smsemailservice.controller.EmailRequestController  - bcc:[]
-[http-nio-8081-exec-1] INFO  com.anmol.smsemailservice.controller.EmailRequestController  - parameters:{orderId=158}
-[http-nio-8081-exec-1] INFO  com.anmol.smsemailservice.controller.EmailRequestController  - subjectParameter:{amount=12343}
-[http-nio-8081-exec-1] INFO  com.anmol.smsemailservice.controller.EmailRequestController  - Body key:$orderId$
-[http-nio-8081-exec-1] DEBUG com.anmol.smsemailservice.controller.EmailRequestController  - Template Body:Hi there,Thank you for choosing ClearTax. We are pleased to conform your order 158 and in receipt of payment for the same  
-[http-nio-8081-exec-1] INFO  com.anmol.smsemailservice.controller.EmailRequestController  - Subject key:$amount$
+[http-nio-8081-exec-1] INFO  com.anmol.smsemailservice.controller.EmailRequestController  - parameters:{}
+[http-nio-8081-exec-1] INFO  com.anmol.smsemailservice.controller.EmailRequestController  - subjectParameter:{}
+[http-nio-8081-exec-1] DEBUG com.anmol.smsemailservice.controller.EmailRequestController  - Template Body:helloooooooooooooooooooo
